@@ -1,0 +1,87 @@
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(27, 42, 51, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: var(--space-4);
+}
+
+.dialog-card {
+  background: var(--paper-raised);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  width: 100%;
+  max-width: 380px;
+  padding: var(--space-6);
+  position: relative;
+}
+
+.dialog-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--space-5);
+  right: var(--space-5);
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--mist-line) 0,
+    var(--mist-line) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}
+
+.slip-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brass);
+  margin-bottom: var(--space-2);
+}
+
+.slip-header h2 {
+  margin-bottom: 2px;
+}
+
+.slip-author {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  margin-bottom: var(--space-5);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.success-state {
+  text-align: center;
+  padding: var(--space-3) 0;
+}
+
+.stamp-mark {
+  width: 48px;
+  height: 48px;
+  border: 2px dashed var(--moss);
+  color: var(--moss);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin: 0 auto var(--space-4);
+  transform: rotate(-6deg);
+}
+
+.success-state p {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-5);
+}

@@ -1,0 +1,68 @@
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(63, 110, 82, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(184, 134, 43, 0.08), transparent 40%),
+    var(--paper);
+  padding: var(--space-5);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  padding: var(--space-6);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.login-mark {
+  font-size: 2rem;
+}
+
+.login-header h1 {
+  font-size: 1.5rem;
+  margin-top: var(--space-2);
+}
+
+.login-sub {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.login-submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.demo-hint {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--mist-line);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--moss-deep);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.8rem;
+}
+.link-btn:hover {
+  text-decoration: underline;
+}

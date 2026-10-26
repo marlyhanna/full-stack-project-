@@ -1,0 +1,37 @@
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Inbox</div>
+    <h1>Notifications</h1>
+  </div>
+</div>
+
+@if (errorMessage()) {
+  <div class="banner-error">{{ errorMessage() }}</div>
+}
+
+@if (loading()) {
+  <div class="empty-state">Loading…</div>
+} @else if (result() && result()!.items.length === 0) {
+  <div class="empty-state">
+    <div class="empty-state-title">All caught up</div>
+    <p>New borrow activity will show up here.</p>
+  </div>
+} @else if (result()) {
+  <div class="notification-list">
+    @for (n of result()!.items; track n.id) {
+      <button
+        type="button"
+        class="notification-item"
+        [class.unread]="!n.isRead"
+        (click)="markAsRead(n)"
+      >
+        <span class="unread-dot" [class.hidden]="n.isRead"></span>
+        <div class="notification-body">
+          <div class="notification-title">{{ n.title }}</div>
+          <div class="notification-message">{{ n.message }}</div>
+          <div class="notification-time">{{ n.createdAt | date: 'medium' }}</div>
+        </div>
+      </button>
+    }
+  </div>
+}

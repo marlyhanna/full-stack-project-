@@ -1,0 +1,81 @@
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Circulation Desk</div>
+    <h1>Borrowing requests</h1>
+  </div>
+
+  <select [(ngModel)]="statusFilter" (ngModelChange)="load()">
+    <option value="">All statuses</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Denied">Denied</option>
+    <option value="Returned">Returned</option>
+    <option value="Expired">Expired</option>
+  </select>
+</div>
+
+@if (errorMessage()) {
+  <div class="banner-error">{{ errorMessage() }}</div>
+}
+
+@if (loading()) {
+  <div class="empty-state">Loading…</div>
+} @else if (result() && result()!.items.length === 0) {
+  <div class="empty-state">
+    <div class="empty-state-title">Nothing here</div>
+    <p>No requests match this filter right now.</p>
+  </div>
+} @else if (result()) {
+  <div class="request-table">
+    @for (req of result()!.items; track req.id) {
+      <div class="request-row">
+        <div class="row-main">
+          <span class="badge status-{{ req.status.toLowerCase() }}">{{ req.status }}</span>
+          <div>
+            <div class="row-title">{{ req.bookTitle }}</div>
+            <div class="row-meta">
+              {{ req.borrowingPeriodDays }} days · requested {{ req.requestedAt | date: 'mediumDate' }}
+            </div>
+          </div>
+        </div>
+
+        @if (req.status === 'Pending') {
+          <div class="row-actions">
+            <button
+              class="btn btn-primary btn-sm"
+              [disabled]="actingOnId() === req.id"
+              (click)="approve(req)"
+            >
+              Approve
+            </button>
+            <button
+              class="btn btn-danger btn-sm"
+              [disabled]="actingOnId() === req.id"
+              (click)="openDeny(req)"
+            >
+              Deny
+            </button>
+          </div>
+        }
+
+        @if (denyTargetId() === req.id) {
+          <div class="deny-panel">
+            <input
+              type="text"
+              placeholder="Reason for denial…"
+              [(ngModel)]="denyReason"
+            />
+            <button class="btn btn-ghost btn-sm" (click)="cancelDeny()">Cancel</button>
+            <button
+              class="btn btn-danger btn-sm"
+              [disabled]="!denyReason.trim()"
+              (click)="confirmDeny()"
+            >
+              Confirm deny
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

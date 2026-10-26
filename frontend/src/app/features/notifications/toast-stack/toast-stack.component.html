@@ -1,0 +1,21 @@
+<div class="toast-stack">
+  @for (toast of signalr.toasts(); track toast.id) {
+    <div class="toast">
+      <div class="toast-stamp">✆</div>
+      <div class="toast-body">
+        <div class="toast-label">{{ labelFor(toast.type) }}</div>
+        <div class="toast-title">{{ toast.bookTitle }}</div>
+        @if (toast.requestedBy) {
+          <div class="toast-meta">by {{ toast.requestedBy }}</div>
+        }
+        @if (toast.dueDate) {
+          <div class="toast-meta">due {{ toast.dueDate | date: 'mediumDate' }}</div>
+        }
+        @if (toast.reason) {
+          <div class="toast-meta">{{ toast.reason }}</div>
+        }
+      </div>
+      <button class="toast-close" (click)="dismiss(toast.id)" aria-label="Dismiss">×</button>
+    </div>
+  }
+</div>

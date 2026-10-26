@@ -1,0 +1,89 @@
+<div class="page-header">
+  <div>
+    <div class="eyebrow">Catalog</div>
+    <h1>Browse books</h1>
+  </div>
+</div>
+
+<div class="filters">
+  <input
+    class="search-input"
+    type="search"
+    placeholder="Search title, author, or category…"
+    [(ngModel)]="search"
+    (ngModelChange)="onFilterChange()"
+  />
+
+  <label class="check-filter">
+    <input type="checkbox" [(ngModel)]="availableOnly" (ngModelChange)="onFilterChange()" />
+    Available only
+  </label>
+
+  <select [(ngModel)]="sortBy" (ngModelChange)="onFilterChange()">
+    <option value="title">Sort: Title</option>
+    <option value="author">Sort: Author</option>
+    <option value="createdAt">Sort: Newest</option>
+  </select>
+</div>
+
+@if (errorMessage()) {
+  <div class="banner-error">{{ errorMessage() }}</div>
+}
+
+@if (loading()) {
+  <div class="empty-state">Loading catalog…</div>
+} @else if (result() && result()!.items.length === 0) {
+  <div class="empty-state">
+    <div class="empty-state-title">No books match that search</div>
+    <p>Try a different title, author, or clear the availability filter.</p>
+  </div>
+} @else if (result()) {
+  <div class="book-grid">
+    @for (book of result()!.items; track book.id) {
+      <div class="book-card card">
+        <div class="book-spine" [class.unavailable]="!book.isAvailable"></div>
+        <div class="book-body">
+          @if (book.category) {
+            <div class="book-category">{{ book.category }}</div>
+          }
+          <h3 class="book-title">{{ book.title }}</h3>
+          <div class="book-author">{{ book.author }}</div>
+
+          <div class="book-footer">
+            <span class="copies" [class.copies-low]="book.availableCopies === 0">
+              {{ book.availableCopies }} / {{ book.totalCopies }} available
+            </span>
+
+            @if (auth.isUser()) {
+              <button
+                class="btn btn-primary btn-sm"
+                [disabled]="book.availableCopies === 0"
+                (click)="openBorrow(book)"
+              >
+                Borrow
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (result()!.totalPages > 1) {
+    <div class="pagination">
+      @for (p of [].constructor(result()!.totalPages); track $index) {
+        <button
+          class="page-btn"
+          [class.active]="$index + 1 === page"
+          (click)="goToPage($index + 1)"
+        >
+          {{ $index + 1 }}
+        </button>
+      }
+    </div>
+  }
+}
+
+@if (borrowTarget()) {
+  <app-borrow-dialog [book]="borrowTarget()!" (closed)="closeBorrow($event)" />
+}

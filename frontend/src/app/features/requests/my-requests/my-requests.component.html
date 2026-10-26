@@ -1,0 +1,51 @@
+<div class="page-header">
+  <div>
+    <div class="eyebrow">My Borrowing</div>
+    <h1>Your requests</h1>
+  </div>
+
+  <select [(ngModel)]="statusFilter" (ngModelChange)="load()">
+    <option value="">All statuses</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Denied">Denied</option>
+    <option value="Returned">Returned</option>
+    <option value="Expired">Expired</option>
+  </select>
+</div>
+
+@if (errorMessage()) {
+  <div class="banner-error">{{ errorMessage() }}</div>
+}
+
+@if (loading()) {
+  <div class="empty-state">Loading…</div>
+} @else if (result() && result()!.items.length === 0) {
+  <div class="empty-state">
+    <div class="empty-state-title">No requests yet</div>
+    <p>Borrow a book from the catalog to see it tracked here.</p>
+  </div>
+} @else if (result()) {
+  <div class="request-list">
+    @for (req of result()!.items; track req.id) {
+      <div class="checkout-card">
+        <div class="checkout-stub">
+          <span class="badge status-{{ req.status.toLowerCase() }}">{{ req.status }}</span>
+        </div>
+        <div class="checkout-body">
+          <h3>{{ req.bookTitle }}</h3>
+          <div class="checkout-meta">
+            Requested {{ req.requestedAt | date: 'mediumDate' }} · {{ req.borrowingPeriodDays }} day period
+          </div>
+
+          @if (req.status === 'Approved' && req.dueDate) {
+            <div class="checkout-due">Due back {{ req.dueDate | date: 'mediumDate' }}</div>
+          }
+          @if (req.status === 'Denied' && req.denyReason) {
+            <div class="checkout-deny">Reason: {{ req.denyReason }}</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

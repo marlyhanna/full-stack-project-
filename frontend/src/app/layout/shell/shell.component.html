@@ -1,0 +1,47 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">📖</span>
+      <div>
+        <div class="brand-name">Library System</div>
+        <div class="brand-sub">Circulation Desk</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/books" routerLinkActive="active" class="nav-link">Catalog</a>
+
+      @if (auth.isUser()) {
+        <a routerLink="/requests/my" routerLinkActive="active" class="nav-link">My Borrowing</a>
+      }
+
+      @if (auth.isAdmin()) {
+        <a routerLink="/requests" routerLinkActive="active" class="nav-link">Requests</a>
+      }
+
+      <a routerLink="/notifications" routerLinkActive="active" class="nav-link">
+        Notifications
+        @if (notifications.unreadCount() > 0) {
+          <span class="nav-count">{{ notifications.unreadCount() }}</span>
+        }
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="user-avatar">{{ auth.currentUser()?.fullName?.charAt(0) }}</div>
+        <div>
+          <div class="user-name">{{ auth.currentUser()?.fullName }}</div>
+          <div class="user-role">{{ auth.currentUser()?.role }}</div>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm logout-btn" (click)="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+
+  <app-toast-stack />
+</div>

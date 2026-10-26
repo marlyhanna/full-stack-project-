@@ -1,0 +1,222 @@
+// ============================================================
+// Library System — Design Tokens
+// Concept: a university library's card catalog & checkout desk.
+// Ink + moss + brass, ledger typography, a due-date "stamp" motif.
+// ============================================================
+
+:root {
+  // Color
+  --ink: #1b2a33;
+  --ink-soft: #445a63;
+  --paper: #f7f4ec;
+  --paper-raised: #ffffff;
+  --moss: #3f6e52;
+  --moss-deep: #2c4e3a;
+  --brass: #b8862b;
+  --clay: #a6432f;
+  --mist: #dce3de;
+  --mist-line: rgba(27, 42, 51, 0.12);
+
+  // Type
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  // Scale
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 1px 2px rgba(27, 42, 51, 0.06), 0 6px 20px rgba(27, 42, 51, 0.07);
+  --shadow-raised: 0 2px 4px rgba(27, 42, 51, 0.08), 0 12px 32px rgba(27, 42, 51, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--space-2);
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.125rem; }
+
+p { margin: 0 0 var(--space-3); }
+
+a {
+  color: var(--moss-deep);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+// ---- Shared utility classes ----
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--moss);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) { background: var(--moss-deep); }
+.btn-primary:active:not(:disabled) { transform: translateY(1px); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--mist-line);
+  color: var(--ink);
+}
+.btn-ghost:hover:not(:disabled) { border-color: var(--ink-soft); background: rgba(27,42,51,0.03); }
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--clay);
+  color: var(--clay);
+}
+.btn-danger:hover:not(:disabled) { background: rgba(166, 67, 47, 0.08); }
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.field input, .field select, .field textarea {
+  border: 1px solid var(--mist-line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  background: var(--paper-raised);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--moss);
+}
+.field .field-error {
+  font-size: 0.78rem;
+  color: var(--clay);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+}
+.badge.status-pending { background: rgba(184, 134, 43, 0.14); color: var(--brass); }
+.badge.status-approved { background: rgba(63, 110, 82, 0.14); color: var(--moss-deep); }
+.badge.status-denied { background: rgba(166, 67, 47, 0.12); color: var(--clay); }
+.badge.status-returned { background: rgba(27, 42, 51, 0.08); color: var(--ink-soft); }
+.badge.status-expired { background: rgba(166, 67, 47, 0.12); color: var(--clay); }
+
+.card {
+  background: var(--paper-raised);
+  border: 1px solid var(--mist-line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  color: var(--ink-soft);
+}
+.empty-state .empty-state-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+}
+
+.banner-error {
+  background: rgba(166, 67, 47, 0.08);
+  border: 1px solid rgba(166, 67, 47, 0.3);
+  color: var(--clay);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  font-size: 0.88rem;
+  margin-bottom: var(--space-4);
+}

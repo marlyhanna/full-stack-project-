@@ -1,0 +1,39 @@
+<div class="dialog-backdrop" (click)="close()">
+  <div class="dialog-card" (click)="$event.stopPropagation()">
+    @if (!success()) {
+      <div class="slip-header">
+        <div class="slip-eyebrow">Borrower's Card</div>
+        <h2>{{ book.title }}</h2>
+        <div class="slip-author">{{ book.author }}</div>
+      </div>
+
+      @if (errorMessage()) {
+        <div class="banner-error">{{ errorMessage() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="field">
+          <label for="days">Borrowing period (days)</label>
+          <input id="days" type="number" min="1" max="30" formControlName="borrowingPeriodDays" />
+          @if (form.controls.borrowingPeriodDays.invalid && form.controls.borrowingPeriodDays.touched) {
+            <span class="field-error">Choose between 1 and 30 days.</span>
+          }
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-ghost" (click)="close()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="submitting()">
+            {{ submitting() ? 'Submitting…' : 'Request to borrow' }}
+          </button>
+        </div>
+      </form>
+    } @else {
+      <div class="success-state">
+        <div class="stamp-mark">✓</div>
+        <h2>Request submitted</h2>
+        <p>The library admin has been notified. Track its status from "My Borrowing".</p>
+        <button class="btn btn-primary" (click)="close()">Done</button>
+      </div>
+    }
+  </div>
+</div>

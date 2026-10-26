@@ -1,0 +1,21 @@
+{
+  "/wso2-token": {
+    "target": "https://penny-smugly-nuzzle.ngrok-free.dev",
+    "changeOrigin": true,
+    "secure": true,
+    "pathRewrite": { "^/wso2-token": "/auth/1/token" }
+  },
+  "/wso2-api": {
+    "target": "https://penny-smugly-nuzzle.ngrok-free.dev",
+    "changeOrigin": true,
+    "secure": true,
+    "pathRewrite": { "^/wso2-api": "/books/1" }
+  },
+  "/wso2-hub": {
+    "target": "https://penny-smugly-nuzzle.ngrok-free.dev",
+    "changeOrigin": true,
+    "secure": true,
+    "ws": true,
+    "pathRewrite": { "^/wso2-hub": "/books/1" }
+  }
+}
